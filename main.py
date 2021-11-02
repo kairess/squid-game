@@ -38,7 +38,6 @@ class Tagger(Entity):
             scale=1,
             origin=0,
 
-            speak_count=0,
             status='idle',
             voice=Audio('assets/sound', autoplay=False)
         )
@@ -52,30 +51,20 @@ class Tagger(Entity):
         self.look_back()
 
     def speak(self):
-        if self.status != 'speak':
-            self.status = 'speak'
-            self.voice.play()
+        self.status = 'speak'
+        self.voice.play()
 
-        self.speak_count += 1
-
-        if self.speak_count > 4:
-            self.look_forward()
-        else:
-            invoke(self.speak, delay=1)
+        invoke(self.look_forward, delay=4)
 
     def look_forward(self):
         self.status = 'forward'
-    
         self.animate('rotation_y', 0, duration=.2, curve=curve.linear)
 
         invoke(self.look_back, delay=3)
 
     def look_back(self):
         self.status = 'back'
-
         self.animate('rotation_y', 180, duration=3, curve=curve.linear)
-
-        self.speak_count = 0
 
         invoke(self.speak, delay=3)
 
