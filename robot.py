@@ -1,5 +1,6 @@
 import cv2
 from dynamikontrol import Module, Timer
+from playsound import playsound
 
 MOVE_THRESHOLD = 2000
 
@@ -25,7 +26,9 @@ def start_speaking():
     global robot_status
     robot_status = 'speaking'
 
-    timer.callback_after(func=start_looking, after=3)
+    playsound('assets/sound.wav')
+    start_looking()
+    # timer.callback_after(func=start_looking, after=3)
 
 def set_looking():
     global robot_status
